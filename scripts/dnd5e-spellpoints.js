@@ -153,33 +153,11 @@ class SpellPoints {
       if (this.settings.spEnableVariant) {
         // spell point resource is 0 but character can still cast.
         spellPointResource.values.value = 0;
-        const hpMaxLost = spellPointCost * SpellPoints.settings.spLifeCost;
+        const hpLost = spellPointCost * SpellPoints.settings.spLifeCost;
         const hpActual = actor.data.data.attributes.hp.value;
-        let hpTempMaxActual = actor.data.data.attributes.hp.tempmax;
-        const hpMaxFull = actor.data.data.attributes.hp.max;
-        if (!hpTempMaxActual)
-          hpTempMaxActual = 0;
-        const newTempMaxHP = hpTempMaxActual - hpMaxLost;
-        const newMaxHP = hpMaxFull + newTempMaxHP;
+        const newHpValue = hpActual - hpLost;
         
-        if (hpMaxFull + newTempMaxHP <= 0) { //character is permanently dead
-          // 3 death saves failed and 0 hp 
-          update.data.attributes = {'death':{'failure':3}, 'hp':{'tempmax':-hpMaxFull,'value':0}}; 
-          ChatMessage.create({
-            content: "<i style='color:red;'>"+game.i18n.format("dnd5e-spellpoints.castedLifeDead", { ActorName : actor.data.name })+"</i>",
-            
-            speaker: ChatMessage.getSpeaker({ alias: actor.data.name })
-          });
-        } else {
-          update.data.attributes = {'hp':{'tempmax':newTempMaxHP}};// hp max reduction
-          if (hpActual > newMaxHP) { // a character cannot have more hp than his maximum
-            update.data.attributes = mergeObject(update.data.attributes,{'hp':{'value': newMaxHP}});
-          }
-          ChatMessage.create({
-            content: "<i style='color:red;'>"+game.i18n.format("dnd5e-spellpoints.castedLife", { ActorName : actor.data.name, hpMaxLost: hpMaxLost })+"</i>",
-            speaker: ChatMessage.getSpeaker({ alias: actor.data.name })
-          });
-        }
+        update.data.attributes = {'hp':{'value':newHpValue}};
       } else { 
         ChatMessage.create({
           content: "<i style='color:red;'>"+game.i18n.format("dnd5e-spellpoints.notEnoughSp", { ActorName : actor.data.name, SpellPoints: this.settings.spResource })+"</i>",
