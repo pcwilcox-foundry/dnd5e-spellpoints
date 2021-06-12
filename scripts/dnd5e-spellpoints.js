@@ -158,6 +158,10 @@ class SpellPoints {
         const newHpValue = hpActual - hpLost;
         
         update.data.attributes = {'hp':{'value':newHpValue}};
+        ChatMessage.create({
+          content: "<i style='color:red;'>"+game.i18n.format("dnd5e-spellpoints.castedLife", { ActorName : actor.data.name, hpLost: hpLost })+"</i>",
+          speaker: ChatMessage.getSpeaker({ alias: actor.data.name })
+        });
       } else { 
         ChatMessage.create({
           content: "<i style='color:red;'>"+game.i18n.format("dnd5e-spellpoints.notEnoughSp", { ActorName : actor.data.name, SpellPoints: this.settings.spResource })+"</i>",
