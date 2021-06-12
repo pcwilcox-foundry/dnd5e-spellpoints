@@ -5,9 +5,9 @@
     "version": "1.2.1",
     "minimumCoreVersion": "0.8.3",
     "compatibleCoreVersion": "0.8.5",
-    "url": "https://github.com/misthero/dnd5e-spellpoints",
-    "manifest": "https://raw.githubusercontent.com/misthero/dnd5e-spellpoints/0.8x/module.json",
-    "download": "https://github.com/misthero/dnd5e-spellpoints/archive/0.8x.zip",
+    "url": "https://github.com/pcwilcox-foundry/dnd5e-spellpoints",
+    "manifest": "https://raw.githubusercontent.com/pcwilcox-foundry/dnd5e-spellpoints/main/module.json",
+    "download": "https://github.com/pcwilcox-foundry/dnd5e-spellpoints/archive/main.zip",
     "system": ["dnd5e"],
     "includes": [
         "./assets/**",
@@ -21,6 +21,10 @@
       {
         "name": "misthero",
         "url": "https://github.com/misthero"
+      },
+      {
+        "name": "pcwilcox",
+        "url": "https://github.com/pcwilcox"
       }
     ],
     "esmodules": [
